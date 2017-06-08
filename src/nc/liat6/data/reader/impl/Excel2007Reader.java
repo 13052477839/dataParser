@@ -4,8 +4,10 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
 import nc.liat6.data.reader.bean.Source;
 import nc.liat6.data.util.IOHelper;
@@ -30,6 +32,17 @@ import org.xml.sax.helpers.XMLReaderFactory;
  *
  */
 public class Excel2007Reader extends DefaultHandler implements Runnable{
+  /** 日期格式 */
+  private static Set<String> DATE_FORMATS = new HashSet<String>(){
+    private static final long serialVersionUID = 1L;
+    {
+      add("m/d/yy");
+      add("mm/dd/yy");
+      add("yy/m/d");
+      add("yyyy/m/d");
+      add("yyyy/mm/dd");
+    }
+  };
   /** 每次读取的行数 */
   public static int queueSize = 5000;
   private boolean end;
@@ -130,7 +143,7 @@ public class Excel2007Reader extends DefaultHandler implements Runnable{
         int cs = Integer.parseInt(cellStyle);
         XSSFCellStyle style = stylesTable.getStyleAt(cs);
         String format = style.getDataFormatString();
-        if("m/d/yy".equals(format)){
+        if(DATE_FORMATS.contains(format)){
           dateFormat = "yyyy-MM-dd";
         }
       }
