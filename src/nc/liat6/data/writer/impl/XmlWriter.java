@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.List;
+import nc.liat6.data.parser.bean.Item;
 import nc.liat6.data.util.IOHelper;
 import nc.liat6.data.writer.AbstractWriter;
 import nc.liat6.data.writer.bean.Target;
@@ -46,7 +47,7 @@ public class XmlWriter extends AbstractWriter implements Closeable{
     super.stop();
   }
 
-  public void writeLine(List<String> line) throws IOException{
+  public void writeLine(List<Item> line) throws IOException{
     if(stop){
       return;
     }
@@ -58,7 +59,8 @@ public class XmlWriter extends AbstractWriter implements Closeable{
     StringBuffer s = new StringBuffer();
     s.append("<row>");
     for(int i = 0,j=line.size();i<j;i++){
-      String o = line.get(i);
+      Item item = line.get(i);
+      String o = null==item?"":item.getContent();
       s.append("<col>");
       if(null!=o){
         if(o.contains("<")||o.contains(">")){

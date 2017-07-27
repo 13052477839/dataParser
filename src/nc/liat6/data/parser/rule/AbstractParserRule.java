@@ -2,6 +2,7 @@ package nc.liat6.data.parser.rule;
 
 import java.util.HashMap;
 import java.util.Map;
+import nc.liat6.data.parser.bean.ItemType;
 
 /**
  * 抽象解析规则
@@ -76,5 +77,9 @@ public abstract class AbstractParserRule implements IParserRule{
 
   public Map<String,String> getHeadItemNames(){
     return new HashMap<String,String>();
+  }
+
+  public Map<String,ItemType> getBodyItemTypes(){
+    return new HashMap<String,ItemType>();
   }
 }

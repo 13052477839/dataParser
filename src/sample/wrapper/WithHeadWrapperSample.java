@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import nc.liat6.data.parser.bean.Block;
 import nc.liat6.data.parser.bean.BlockType;
+import nc.liat6.data.parser.bean.ItemType;
 import nc.liat6.data.parser.rule.IParserRule;
 import nc.liat6.data.parser.rule.ParserRuleFixedBlockHeight;
 import nc.liat6.data.wrapper.IWrapper;
@@ -44,6 +45,12 @@ public class WithHeadWrapperSample{
         names.put("0,3","age");
         names.put("0,4","民族");
         return names;
+      }
+      public Map<String,ItemType> getBodyItemTypes(){
+        Map<String,ItemType> types = new HashMap<String,ItemType>();
+        types.put("0,0",ItemType.number);
+        types.put("0,3",ItemType.number);
+        return types;
       }
     };
 

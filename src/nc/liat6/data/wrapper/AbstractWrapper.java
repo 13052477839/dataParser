@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import nc.liat6.data.parser.bean.Block;
 import nc.liat6.data.parser.bean.Item;
+import nc.liat6.data.parser.bean.ItemType;
 import nc.liat6.data.parser.rule.IParserRule;
 import nc.liat6.data.writer.IWriter;
 
@@ -110,18 +111,18 @@ public abstract class AbstractWrapper implements IWrapper{
     if(height<bodyStartRow){
       height = bodyStartRow;
     }
-    List<List<String>> rows = new ArrayList<List<String>>(height);
+    List<List<Item>> rows = new ArrayList<List<Item>>(height);
     for(int i=0;i<height;i++){
-      List<String> cols = new ArrayList<String>(width);
+      List<Item> cols = new ArrayList<Item>(width);
       for(int j=0;j<width;j++){
-        cols.add("");
+        cols.add(null);
       }
       rows.add(cols);
     }
     for(Item item:block.getItems()){
-      rows.get(item.getRow()).set(item.getCol(),item.getContent());
+      rows.get(item.getRow()).set(item.getCol(),item);
     }
-    for(List<String> cols:rows){
+    for(List<Item> cols:rows){
       writer.writeLine(cols);
     }
     headSkiped = true;
@@ -147,30 +148,38 @@ public abstract class AbstractWrapper implements IWrapper{
       item.setRow(row);
       item.setCol(col);
     }
+    for(Entry<String,ItemType> entry:rule.getBodyItemTypes().entrySet()){
+      for(Item item:block.getItems()){
+        if(!entry.getKey().equals(item.getRow()+","+item.getCol())){
+          continue;
+        }
+        item.setType(entry.getValue());
+      }
+    }
     int width = getWidth(block);
     int height = getHeight(block);
-    List<List<String>> rows = new ArrayList<List<String>>(height);
+    List<List<Item>> rows = new ArrayList<List<Item>>(height);
     for(int i=0;i<height;i++){
-      List<String> cols = new ArrayList<String>(width);
+      List<Item> cols = new ArrayList<Item>(width);
       for(int j=0;j<width;j++){
-        cols.add("");
+        cols.add(null);
       }
       rows.add(cols);
     }
     for(Item item:block.getItems()){
-      rows.get(item.getRow()).set(item.getCol(),item.getContent());
+      rows.get(item.getRow()).set(item.getCol(),item);
     }
     if(!headSkiped){
       for(int i=0;i<rule.getBodyStartRow();i++){
-        List<String> cols = new ArrayList<String>(width);
+        List<Item> cols = new ArrayList<Item>(width);
         for(int j=0;j<width;j++){
-          cols.add("");
+          cols.add(null);
         }
         rows.add(0,cols);
       }
       headSkiped = true;
     }
-    for(List<String> cols:rows){
+    for(List<Item> cols:rows){
       writer.writeLine(cols);
     }
   }

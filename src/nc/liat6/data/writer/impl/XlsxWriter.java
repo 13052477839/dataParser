@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
+import nc.liat6.data.parser.bean.Item;
 import nc.liat6.data.writer.AbstractWriter;
 import nc.liat6.data.writer.bean.Target;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -45,7 +46,7 @@ public class XlsxWriter extends AbstractWriter implements Closeable{
     super.stop();
   }
 
-  public void writeLine(List<String> line) throws IOException{
+  public void writeLine(List<Item> line) throws IOException{
     if(stop){
       return;
     }
@@ -55,9 +56,25 @@ public class XlsxWriter extends AbstractWriter implements Closeable{
     }
     XSSFRow row = sheet.createRow(count++);
     for(int i=0,j=line.size();i<j;i++){
+      Item item = line.get(i);
+      if(null==item) continue;
+      String o = item.getContent();
+      if(null==o) continue;
       XSSFCell cell = row.createCell(i);
-      cell.setCellType(XSSFCell.CELL_TYPE_STRING);
-      cell.setCellValue(line.get(i));
+      switch(item.getType()){
+        case number:
+          cell.setCellType(XSSFCell.CELL_TYPE_NUMERIC);
+          try{
+            cell.setCellValue(Double.parseDouble(o));
+          }catch(Exception e){
+            cell.setCellValue(o);
+          }
+          break;
+        default:
+          cell.setCellType(XSSFCell.CELL_TYPE_STRING);
+          cell.setCellValue(o);
+          break;
+      }
     }
   }
 

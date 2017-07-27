@@ -2,6 +2,7 @@ package nc.liat6.data.writer;
 
 import java.io.IOException;
 import java.util.List;
+import nc.liat6.data.parser.bean.Item;
 import nc.liat6.data.writer.bean.Target;
 
 /**
@@ -23,7 +24,7 @@ public interface IWriter{
    * @param 行数据
    * @throws IOException
    */
-  void writeLine(List<String> line) throws IOException;
+  void writeLine(List<Item> line) throws IOException;
 
   /**
    * 停止写入

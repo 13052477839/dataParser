@@ -54,7 +54,7 @@ public class TextWrapper extends AbstractWrapper{
       item.setRow(row);
       item.setCol(col);
     }
-    List<List<String>> rows = new ArrayList<List<String>>();
+    List<List<Item>> rows = new ArrayList<List<Item>>();
     List<Item> items = block.getItems();
     for(Item item:items){
       String o = item.getContent();
@@ -68,15 +68,15 @@ public class TextWrapper extends AbstractWrapper{
       item.setContent(o);
     }
     Collections.sort(items,new TextItemComparator());
-    List<String> cols = new ArrayList<String>();
+    List<Item> cols = new ArrayList<Item>();
     for(Item item:items){
-      cols.add(item.getContent());
+      cols.add(item);
     }
     rows.add(cols);
     for(int i=0;i<rule.getBodyStartRow()-1;i++){
-      rows.add(0,new ArrayList<String>());
+      rows.add(0,new ArrayList<Item>());
     }
-    for(List<String> row:rows){
+    for(List<Item> row:rows){
       writer.writeLine(row);
     }
     headSkiped = true;
@@ -102,7 +102,7 @@ public class TextWrapper extends AbstractWrapper{
       item.setRow(row);
       item.setCol(col);
     }
-    List<List<String>> rows = new ArrayList<List<String>>();
+    List<List<Item>> rows = new ArrayList<List<Item>>();
     List<Item> items = block.getItems();
     for(Item item:items){
       String o = item.getContent();
@@ -116,18 +116,18 @@ public class TextWrapper extends AbstractWrapper{
       item.setContent(o);
     }
     Collections.sort(items,new TextItemComparator());
-    List<String> cols = new ArrayList<String>();
+    List<Item> cols = new ArrayList<Item>();
     for(Item item:items){
-      cols.add(item.getContent());
+      cols.add(item);
     }
     rows.add(cols);
     if(!headSkiped){
       for(int i=0;i<rule.getBodyStartRow();i++){
-        rows.add(0,new ArrayList<String>());
+        rows.add(0,new ArrayList<Item>());
       }
       headSkiped = true;
     }
-    for(List<String> row:rows){
+    for(List<Item> row:rows){
       writer.writeLine(row);
     }
   }

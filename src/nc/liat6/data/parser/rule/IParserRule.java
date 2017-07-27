@@ -1,6 +1,7 @@
 package nc.liat6.data.parser.rule;
 
 import java.util.Map;
+import nc.liat6.data.parser.bean.ItemType;
 
 /**
  * 解析规则接口，第一个数据块之上的内容，合并为一个head块。
@@ -70,6 +71,13 @@ public interface IParserRule{
    * @return 数据各格子的名称映射
    */
   Map<String,String> getBodyItemNames();
+
+  /**
+   * 获取数据各格子的类型映射
+   * 
+   * @return 数据各格子的类型映射
+   */
+  Map<String,ItemType> getBodyItemTypes();
 
   /**
    * 获取数据分片的名称映射

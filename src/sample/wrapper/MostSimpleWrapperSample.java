@@ -2,8 +2,11 @@ package sample.wrapper;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import nc.liat6.data.parser.bean.Block;
 import nc.liat6.data.parser.bean.BlockType;
+import nc.liat6.data.parser.bean.ItemType;
 import nc.liat6.data.parser.rule.IParserRule;
 import nc.liat6.data.parser.rule.impl.ParserRuleLetter;
 import nc.liat6.data.wrapper.IWrapper;
@@ -20,7 +23,13 @@ public class MostSimpleWrapperSample{
     File file = new File("D:\\test.xls");
 
     //使用列对应字母，数据从第1行开始（行从0开始计）
-    IParserRule rule = new ParserRuleLetter(0,"A","D");
+    IParserRule rule = new ParserRuleLetter(0,"A","D"){
+      public Map<String,ItemType> getBodyItemTypes(){
+        Map<String,ItemType> types = new HashMap<String,ItemType>();
+        types.put("0,2",ItemType.number);
+        return types;
+      }
+    };
 
     IWrapper wrapper = WrapperFactory.getInstance().getWrapper("xls",file,rule);
     Block head = new Block(BlockType.body);

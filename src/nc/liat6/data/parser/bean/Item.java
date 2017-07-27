@@ -15,6 +15,10 @@ public class Item{
   private String name;
   /** 格子的内容 */
   private String content;
+  /** 格子的默认数据类型 */
+  public static final ItemType DEFAULT_TYPE = ItemType.string;
+  /** 格子的数据类型 */
+  private ItemType type = DEFAULT_TYPE;
 
   public Item(){}
 
@@ -73,5 +77,13 @@ public class Item{
 
   public void setContent(String content){
     this.content = content;
+  }
+
+  public ItemType getType(){
+    return type;
+  }
+
+  public void setType(ItemType type){
+    this.type = type;
   }
 }
