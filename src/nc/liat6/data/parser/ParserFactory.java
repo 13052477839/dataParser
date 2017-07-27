@@ -89,11 +89,11 @@ public class ParserFactory{
       parser.setRule(parserRule);
       int startRow = parser.getStartRow();
       if(startRow>-1){
-        System.out.println("[√] "+parser.getName()+" >> "+source);
+        System.out.println("[√] parser "+parser.getName()+" >> "+source);
         parser.setStartRow(startRow);
         return parser;
       }else{
-        System.out.println("[×] "+parser.getName()+" >> "+source);
+        System.out.println("[×] parser "+parser.getName()+" >> "+source);
       }
     }
     throw new ParserNotSupportException(source+"");

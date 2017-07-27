@@ -12,7 +12,7 @@ import nc.liat6.data.reader.bean.Source;
 import nc.liat6.data.util.IOHelper;
 
 /**
- * CSV文件读取
+ * CSV读取
  * 
  * @author 6tail
  * 
@@ -138,7 +138,6 @@ public class CsvReader extends AbstractReader implements Closeable{
    * 读取下一行
    * 
    * @return 一行数据，如果没有下一行，返回null
-   * @throws IOException
    */
   public List<String> nextLine(){
     buffer.delete(0,buffer.length());

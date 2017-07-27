@@ -8,7 +8,7 @@ import java.io.IOException;
  *
  */
 public class ParserException extends IOException{
-  private static final long serialVersionUID = 6895456093265513725L;
+  private static final long serialVersionUID = 1L;
   private static final String MESSAGE = "解析失败";
 
   public ParserException(){

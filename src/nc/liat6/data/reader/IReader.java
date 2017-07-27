@@ -5,7 +5,7 @@ import java.util.List;
 import nc.liat6.data.reader.bean.Source;
 
 /**
- * 文件读取接口
+ * 读取接口
  * 
  * @author 6tail
  *

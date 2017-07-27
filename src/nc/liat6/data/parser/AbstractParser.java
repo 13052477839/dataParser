@@ -38,13 +38,13 @@ public abstract class AbstractParser implements IParser{
   /** 内容（非空行）开始行，从0开始计 */
   protected int startRow;
 
-  protected AbstractParser(IReader reader,String supportSuffix){
-    this.reader = reader;
-    this.supportSuffix = supportSuffix;
-  }
-
   protected AbstractParser(IReader reader){
     this.reader = reader;
+  }
+
+  protected AbstractParser(IReader reader,String supportSuffix){
+    this(reader);
+    this.supportSuffix = supportSuffix;
   }
 
   public String getName(){

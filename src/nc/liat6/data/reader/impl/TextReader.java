@@ -42,7 +42,6 @@ public class TextReader extends AbstractReader{
     try{
       line = reader.readLine();
     }catch(IOException e){
-      e.printStackTrace();
       IOHelper.closeQuietly(reader);
     }
     if(null==line) return null;

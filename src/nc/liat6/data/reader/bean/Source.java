@@ -42,7 +42,7 @@ public class Source{
 
   public void setFile(File file){
     this.file = file;
-    this.sourceType = SourceType.file;
+    setSourceType(SourceType.file);
   }
 
   public InputStream getInputStream(){
@@ -52,7 +52,7 @@ public class Source{
 
   public void setInputStream(InputStream inputStream) throws IOException{
     inputStreamCache = new InputStreamCache(inputStream);
-    this.sourceType = SourceType.inputStream;
+    setSourceType(SourceType.inputStream);
   }
   
   public String toString(){

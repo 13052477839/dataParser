@@ -3,7 +3,7 @@ package nc.liat6.data.reader;
 import nc.liat6.data.reader.bean.Source;
 
 /**
- * 抽象文件读取
+ * 抽象读取
  * 
  * @author 6tail
  *

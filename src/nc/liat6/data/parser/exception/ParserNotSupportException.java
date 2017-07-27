@@ -7,7 +7,7 @@ package nc.liat6.data.parser.exception;
  *
  */
 public class ParserNotSupportException extends ParserException{
-  private static final long serialVersionUID = 5400137399075687873L;
+  private static final long serialVersionUID = 1L;
   private static final String MESSAGE = "不支持该数据源的解析";
 
   public ParserNotSupportException(){

@@ -16,6 +16,19 @@ public class Item{
   /** 格子的内容 */
   private String content;
 
+  public Item(){}
+
+  public Item(String name,String content){
+    setName(name);
+    setContent(content);
+  }
+
+  public Item(int row,int col,String content){
+    setRow(row);
+    setCol(col);
+    setContent(content);
+  }
+
   public String toString(){
     StringBuilder s = new StringBuilder();
     s.append("{");

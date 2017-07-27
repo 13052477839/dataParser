@@ -77,7 +77,7 @@ public interface IParserRule{
    * @return 数据分片的名称映射
    */
   Map<String,IParserRule> getFragmentRule();
-  
+
   /**
    * 获取块结束行指定列的内容映射，仅用于根据标识自动检测块结束行
    * @return 块结束行指定列的内容映射

@@ -29,6 +29,12 @@ public class Block{
   /** 存放名称对应的分片下标，格式示例：消费记录=1 */
   private Map<String,Integer> name4Fragment = new HashMap<String,Integer>();
 
+  public Block(){}
+
+  public Block(BlockType type){
+    setType(type);
+  }
+
   public int getWidth(){
     return width;
   }
@@ -153,6 +159,33 @@ public class Block{
    */
   public String getItemContent(int row,int col){
     return getItemByGrid(row,col).getContent();
+  }
+
+  /**
+   * 添加格子
+   * @param name 格子名称
+   * @param content 内容
+   */
+  public void addItemContent(String name,String content){
+    Item item = new Item(name,content);
+    int size = items.size();
+    items.add(item);
+    if(null!=name){
+      name4Item.put(name,size);
+    }
+  }
+
+  /**
+   * 添加格子
+   * @param row 行，从0开始计
+   * @param col 列，从0开始计
+   * @param content 内容
+   */
+  public void addItemContent(int row,int col,String content){
+    Item item = new Item(row,col,content);
+    int size = items.size();
+    items.add(item);
+    grid4Item.put(row+","+col,size);
   }
 
   public String toString(){
