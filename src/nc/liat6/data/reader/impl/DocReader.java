@@ -1,48 +1,54 @@
 package nc.liat6.data.reader.impl;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import nc.liat6.data.reader.AbstractReader;
 import nc.liat6.data.reader.bean.Source;
-import nc.liat6.data.util.ReaderHelper;
+import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.hwpf.converter.WordToHtmlConverter;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.w3c.dom.Document;
 
 /**
- * HTML直接改后缀为xls或xlsx的文件读取
- * 
+ * doc文件读取
+ * <p>由于poi原生解析不支持单元格colspan，所以使用变通办法：将doc转为html后解析html表格。</p>
  * @author 6tail
  *
  */
-public class HtmlReader extends AbstractReader{
-  public static final int DOC_TYPE_UNKNOWN = 0;
-  public static final int DOC_TYPE_HTML = 1;
-  public static final int DOC_TYPE_XML = 2;
-  protected Document doc;
+public class DocReader extends AbstractReader{
+  /** doc文档 */
+  protected HWPFDocument doc;
   protected Elements trs;
   protected int rowCount;
   /**列数*/
   protected int colCount;
   protected int rowReaded;
-  protected int docType;
   protected Map<Integer,Integer> rowspans = new HashMap<Integer,Integer>();
 
-  public HtmlReader(Source source){
+  public DocReader(Source source){
     super(source);
   }
 
   public void load() throws IOException{
     switch(source.getSourceType()){
       case file:
-        doc = Jsoup.parse(source.getFile(),ReaderHelper.getCharset(source.getFile()));
+        doc = new HWPFDocument(new FileInputStream(source.getFile()));
         break;
       case inputStream:
-        doc = Jsoup.parse(source.getInputStream(),ReaderHelper.getCharset(source.getInputStream()),null);
+        doc = new HWPFDocument(source.getInputStream());
         break;
     }
     stop = false;
@@ -50,17 +56,32 @@ public class HtmlReader extends AbstractReader{
     colCount = 0;
     rowReaded = 0;
     rowspans.clear();
-    docType = DOC_TYPE_UNKNOWN;
-    trs = doc.getElementsByTag("tr");
-    if(trs.size()>0){
-      docType = DOC_TYPE_HTML;
-    }else{
-      trs = doc.getElementsByTag("row");
-      if(trs.size()>0){
-        docType = DOC_TYPE_XML;
+    try{
+      WordToHtmlConverter converter = new WordToHtmlConverter(DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument());
+      converter.processDocument(doc);
+      Document htmlDoc = converter.getDocument();
+      ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+      DOMSource domSource = new DOMSource(htmlDoc);
+      StreamResult streamResult = new StreamResult(outStream);
+      TransformerFactory tf = TransformerFactory.newInstance();
+      Transformer serializer = tf.newTransformer();
+      serializer.setOutputProperty(OutputKeys.ENCODING,"utf-8");
+      serializer.setOutputProperty(OutputKeys.INDENT,"no");
+      serializer.setOutputProperty(OutputKeys.METHOD,"html");
+      serializer.transform(domSource,streamResult);
+      outStream.close();
+      String content = new String(outStream.toString("utf-8"));
+      org.jsoup.nodes.Document document = Jsoup.parse(content);
+      Elements tables = document.getElementsByTag("table");
+      if(tables.size()>0){
+        trs = tables.get(0).getElementsByTag("tr");
+        rowCount = trs.size();
       }
+    }catch(IOException e){
+      throw e;
+    }catch(Exception e){
+      throw new IOException(e);
     }
-    rowCount = trs.size();
   }
 
   public List<String> nextLine(){

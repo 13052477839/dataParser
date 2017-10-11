@@ -9,6 +9,7 @@ import java.util.List;
 import nc.liat6.data.reader.AbstractReader;
 import nc.liat6.data.reader.bean.Source;
 import nc.liat6.data.util.IOHelper;
+import nc.liat6.data.util.ReaderHelper;
 
 /**
  * txt文件读取
@@ -17,8 +18,6 @@ import nc.liat6.data.util.IOHelper;
  *
  */
 public class TextReader extends AbstractReader{
-  public static final String DEFAULT_ENCODE = "GBK";
-  public static String ENCODE = DEFAULT_ENCODE;
   private BufferedReader reader;
 
   public TextReader(Source source){
@@ -28,10 +27,10 @@ public class TextReader extends AbstractReader{
   public void load() throws IOException{
     switch(source.getSourceType()){
       case file:
-        reader = new BufferedReader(new InputStreamReader(new FileInputStream(source.getFile()),ENCODE));
+        reader = new BufferedReader(new InputStreamReader(new FileInputStream(source.getFile()),ReaderHelper.getCharset(source.getFile())));
         break;
       case inputStream:
-        reader = new BufferedReader(new InputStreamReader(source.getInputStream(),ENCODE));
+        reader = new BufferedReader(new InputStreamReader(source.getInputStream(),ReaderHelper.getCharset(source.getInputStream())));
         break;
     }
     stop = false;

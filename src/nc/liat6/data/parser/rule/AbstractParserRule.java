@@ -12,7 +12,7 @@ import nc.liat6.data.parser.bean.ItemType;
  */
 public abstract class AbstractParserRule implements IParserRule{
   /** 默认的解析顺序 */
-  public static final String[] DEFAULT_ORDER = {"xls","xlsx","csv","html","text","xml"};
+  public static final String[] DEFAULT_ORDER = {"xls","xlsx","doc","docx","csv","html","text","xml"};
 
   public String[] orderBy(){
     return DEFAULT_ORDER;

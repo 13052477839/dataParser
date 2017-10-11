@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import nc.liat6.data.parser.exception.ParserNotSupportException;
 import nc.liat6.data.parser.impl.CsvParser;
+import nc.liat6.data.parser.impl.DocParser;
+import nc.liat6.data.parser.impl.DocxParser;
 import nc.liat6.data.parser.impl.HtmlParser;
 import nc.liat6.data.parser.impl.TextParser;
 import nc.liat6.data.parser.impl.XlsParser;
@@ -74,6 +76,8 @@ public class ParserFactory{
     List<AbstractParser> parsers = new ArrayList<AbstractParser>();
     ps.add(new XlsParser(source));
     ps.add(new XlsxParser(source));
+    ps.add(new DocParser(source));
+    ps.add(new DocxParser(source));
     ps.add(new CsvParser(source));
     ps.add(new HtmlParser(source));
     ps.add(new TextParser(source));

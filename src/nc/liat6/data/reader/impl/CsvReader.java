@@ -10,6 +10,7 @@ import java.util.List;
 import nc.liat6.data.reader.AbstractReader;
 import nc.liat6.data.reader.bean.Source;
 import nc.liat6.data.util.IOHelper;
+import nc.liat6.data.util.ReaderHelper;
 
 /**
  * CSV读取
@@ -18,10 +19,6 @@ import nc.liat6.data.util.IOHelper;
  * 
  */
 public class CsvReader extends AbstractReader implements Closeable{
-  /** 默认的文件编码 */
-  public static final String DEFAULT_ENCODE = "GBK";
-  /** 文件编码 */
-  public static String ENCODE = DEFAULT_ENCODE;
   /** 回车符 */
   public static String CR = "\r";
   /** 换行符 */
@@ -187,10 +184,10 @@ public class CsvReader extends AbstractReader implements Closeable{
   public void load() throws IOException{
     switch(source.getSourceType()){
       case file:
-        reader = new BufferedReader(new InputStreamReader(new FileInputStream(source.getFile()),ENCODE));
+        reader = new BufferedReader(new InputStreamReader(new FileInputStream(source.getFile()),ReaderHelper.getCharset(source.getFile())));
         break;
       case inputStream:
-        reader = new BufferedReader(new InputStreamReader(source.getInputStream(),ENCODE));
+        reader = new BufferedReader(new InputStreamReader(source.getInputStream(),ReaderHelper.getCharset(source.getInputStream())));
         break;
     }
     stop = false;

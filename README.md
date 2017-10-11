@@ -2,11 +2,13 @@
 
 通用表格数据解析工具
 
-> 支持xls、xlsx、csv、html、xml、txt形式的数据源，也支持InputStream解析，并且支持在较低内存占用下完成超大xlsx文件的解析。
+> 支持xls、xlsx、doc、docx、csv、html、xml、txt形式的数据源，也支持InputStream解析，并且支持在较低内存占用下完成超大xlsx文件的解析。
 
 > 支持导出xls、xlsx、csv、html、xml、txt等数据格式，也支持OutputStream输出。
 
 > 支持jdk1.5及以上版本，jdk1.5需额外导入javax包，否则解析xlsx会报错。
+
+> doc和docx文件只解析遇到的第一个表格。
 
 ## 代码目录
 
@@ -21,6 +23,7 @@
 1. 20160925 新增支持txt数据解析（含示例代码及文件）
 2. 20170608 增强xlsx读取日期格式的兼容性
 3. 20170727 优化代码；增加通用表格导出功能
+4. 20171011 新增doc、docx数据解析（含示例代码及文件）；新增自动判定csv、html、xml、txt文件及输入流编码；html及doc格式支持跨行跨列解析。
 
 ## 示例
 
