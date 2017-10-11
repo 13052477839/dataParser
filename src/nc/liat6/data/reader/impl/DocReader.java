@@ -79,8 +79,10 @@ public class DocReader extends AbstractReader{
       }
     }catch(IOException e){
       throw e;
+    }catch(RuntimeException e){
+      throw e;
     }catch(Exception e){
-      throw new IOException(e);
+      throw new RuntimeException(e);
     }
   }
 
