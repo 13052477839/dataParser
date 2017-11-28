@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.List;
+import nc.liat6.data.parser.bean.BlockType;
 import nc.liat6.data.parser.bean.Item;
 import nc.liat6.data.util.IOHelper;
 import nc.liat6.data.writer.AbstractWriter;
@@ -47,7 +48,7 @@ public class HtmlWriter extends AbstractWriter implements Closeable{
     super.stop();
   }
 
-  public void writeLine(List<Item> line) throws IOException{
+  public void writeLine(List<Item> line,BlockType blockType,int lineIndex) throws IOException{
     if(stop){
       return;
     }

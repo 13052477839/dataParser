@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 import nc.liat6.data.parser.bean.Block;
 import nc.liat6.data.parser.bean.Item;
 import nc.liat6.data.parser.bean.ItemType;
-import nc.liat6.data.parser.rule.IParserRule;
+import nc.liat6.data.wrapper.rule.IWrapperRule;
 import nc.liat6.data.writer.IWriter;
 
 /**
@@ -25,14 +25,16 @@ public abstract class AbstractWrapper implements IWrapper{
   protected String supportFormat;
   /** 写入接口 */
   protected IWriter writer;
-  /** 解析规则接口 */
-  protected IParserRule rule;
+  /** 封装规则接口 */
+  protected IWrapperRule rule;
   /** 是否已加载 */
   protected boolean loaded = false;
   /** 是否已跳过头部 */
   protected boolean headSkiped = false;
   /** 是否已完成 */
   protected boolean end = false;
+  protected int headLineIndex = 0;
+  protected int bodyLineIndex = 0;
 
   protected AbstractWrapper(IWriter writer){
     this.writer = writer;
@@ -53,12 +55,13 @@ public abstract class AbstractWrapper implements IWrapper{
   }
 
   /**
-   * 设置解析规则
+   * 设置封装规则
    * 
-   * @param rule 解析规则
+   * @param rule 封装规则
    */
-  public void setRule(IParserRule rule){
+  public void setRule(IWrapperRule rule){
     this.rule = rule;
+    writer.setRule(rule);
   }
   
   protected int getWidth(Block block){
@@ -123,7 +126,7 @@ public abstract class AbstractWrapper implements IWrapper{
       rows.get(item.getRow()).set(item.getCol(),item);
     }
     for(List<Item> cols:rows){
-      writer.writeLine(cols);
+      writer.writeLine(cols,block.getType(),headLineIndex);
     }
     headSkiped = true;
   }
@@ -180,7 +183,7 @@ public abstract class AbstractWrapper implements IWrapper{
       headSkiped = true;
     }
     for(List<Item> cols:rows){
-      writer.writeLine(cols);
+      writer.writeLine(cols,block.getType(),bodyLineIndex);
     }
   }
 
@@ -200,9 +203,14 @@ public abstract class AbstractWrapper implements IWrapper{
     switch(block.getType()){
       case head:
         writeHead(block);
+        headLineIndex++;
         break;
       case body:
         writeBody(block);
+        bodyLineIndex++;
+        if(bodyLineIndex>=rule.getBodyBlockHeight()){
+          bodyLineIndex = 0;
+        }
         break;
       case body_in_fragment:
         break;

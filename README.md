@@ -13,10 +13,10 @@
 ## 代码目录
 
 1. lib：依赖的jar
-* files：示例文件
-* samples：示例代码
-* captures：截图
-* data-parser.jar 最新的，项目中直接用这个jar（当然还得引用依赖的jar）
+2. files：示例文件
+3. samples：示例代码
+4. captures：截图
+5. data-parser.jar 最新的，项目中直接用这个jar（当然还得引用依赖的jar）
 
 ## 更新日志
 
@@ -24,6 +24,7 @@
 2. 20170608 增强xlsx读取日期格式的兼容性
 3. 20170727 优化代码；增加通用表格导出功能
 4. 20171011 新增doc、docx数据解析（含示例代码及文件）；新增自动判定csv、html、xml、txt文件及输入流编码；html及doc格式支持跨行跨列解析。
+5. 20171128 分拆导出功能；支持数字类型、边框，列宽、行高等导出设置。
 
 ## 示例
 
@@ -116,8 +117,8 @@
     //待导出目标，支持xls、xlsx、csv、html、xml、txt、outputStream
     File file = new File("D:\\test.xls");
 
-    //自定义解析规则，这里使用列对应字母，数据Block从第1行开始（行从0开始计）
-    IParserRule rule = new ParserRuleLetter(0,"A","D");
+    //自定义导出规则，这里使用列对应字母，数据Block从第1行开始（行从0开始计）
+    IWrapperRule rule = new WrapperRuleLetter(0,"A","D");
 
     //通过工厂获取封装器接口
     IWrapper wrapper = WrapperFactory.getInstance().getWrapper("xls",file,rule);

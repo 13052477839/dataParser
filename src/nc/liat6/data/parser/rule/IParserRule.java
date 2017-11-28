@@ -1,7 +1,7 @@
 package nc.liat6.data.parser.rule;
 
 import java.util.Map;
-import nc.liat6.data.parser.bean.ItemType;
+import nc.liat6.data.rule.IDataRule;
 
 /**
  * 解析规则接口，第一个数据块之上的内容，合并为一个head块。
@@ -9,7 +9,7 @@ import nc.liat6.data.parser.bean.ItemType;
  * @author 6tail
  *
  */
-public interface IParserRule{
+public interface IParserRule extends IDataRule{
   /**
    * 获取解析器的先后顺序
    * @return
@@ -21,21 +21,7 @@ public interface IParserRule{
    * 
    * @return 解析规则类型
    */
-  RuleType getType();
-
-  /**
-   * 获取头部各格子的名称映射
-   * 
-   * @return 头部各格子的名称映射
-   */
-  Map<String,String> getHeadItemNames();
-
-  /**
-   * 获取数据开始行，从0开始计
-   * 
-   * @return 数据开始行，从0开始计
-   */
-  int getBodyStartRow();
+  ParserRuleType getType();
 
   /**
    * 获取数据结束行，包含，如果为-1表示直到终点行，一般用于定义分片的区域
@@ -57,27 +43,6 @@ public interface IParserRule{
    * @return 数据结束列，包含，如果为-1表示直到终点列
    */
   int getBodyEndCol();
-
-  /**
-   * 获取数据块高度，即包含的行数
-   * 
-   * @return 块高度，即包含的行数
-   */
-  int getBodyBlockHeight();
-
-  /**
-   * 获取数据各格子的名称映射
-   * 
-   * @return 数据各格子的名称映射
-   */
-  Map<String,String> getBodyItemNames();
-
-  /**
-   * 获取数据各格子的类型映射
-   * 
-   * @return 数据各格子的类型映射
-   */
-  Map<String,ItemType> getBodyItemTypes();
 
   /**
    * 获取数据分片的名称映射

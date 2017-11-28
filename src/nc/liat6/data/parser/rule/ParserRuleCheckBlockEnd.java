@@ -11,8 +11,8 @@ import java.util.Map;
  *
  */
 public abstract class ParserRuleCheckBlockEnd extends AbstractParserRule{
-  public RuleType getType(){
-    return RuleType.check_block_end;
+  public ParserRuleType getType(){
+    return ParserRuleType.check_block_end;
   }
   
   public Map<String,String> getBodyItemNames(){

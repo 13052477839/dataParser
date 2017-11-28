@@ -10,8 +10,8 @@ import java.util.Map;
  *
  */
 public abstract class ParserRuleFixedBlockHeight extends AbstractParserRule{
-  public RuleType getType(){
-    return RuleType.fiexd_block_height;
+  public ParserRuleType getType(){
+    return ParserRuleType.fiexd_block_height;
   }
 
   public int getBodyBlockHeight(){

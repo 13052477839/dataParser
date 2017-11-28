@@ -7,10 +7,10 @@ import java.util.Map;
 import nc.liat6.data.parser.bean.Block;
 import nc.liat6.data.parser.bean.BlockType;
 import nc.liat6.data.parser.bean.ItemType;
-import nc.liat6.data.parser.rule.IParserRule;
-import nc.liat6.data.parser.rule.impl.ParserRuleLetter;
 import nc.liat6.data.wrapper.IWrapper;
 import nc.liat6.data.wrapper.WrapperFactory;
+import nc.liat6.data.wrapper.rule.IWrapperRule;
+import nc.liat6.data.wrapper.rule.impl.WrapperRuleLetter;
 
 /**
  * 最简单的文件导出示例
@@ -23,7 +23,7 @@ public class MostSimpleWrapperSample{
     File file = new File("D:\\test.xls");
 
     //使用列对应字母，数据从第1行开始（行从0开始计）
-    IParserRule rule = new ParserRuleLetter(0,"A","D"){
+    IWrapperRule rule = new WrapperRuleLetter(0,"A","D"){
       public Map<String,ItemType> getBodyItemTypes(){
         Map<String,ItemType> types = new HashMap<String,ItemType>();
         types.put("0,2",ItemType.number);

@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 import nc.liat6.data.parser.bean.Block;
 import nc.liat6.data.parser.bean.BlockType;
-import nc.liat6.data.parser.rule.IParserRule;
-import nc.liat6.data.parser.rule.ParserRuleSingleLine;
 import nc.liat6.data.wrapper.IWrapper;
 import nc.liat6.data.wrapper.WrapperFactory;
+import nc.liat6.data.wrapper.rule.IWrapperRule;
+import nc.liat6.data.wrapper.rule.WrapperRuleSingleLine;
 
 /**
  * txt文件导出示例
@@ -19,7 +19,7 @@ import nc.liat6.data.wrapper.WrapperFactory;
 public class TextWrapperSample{
   public static void useName() throws IOException{
     File file = new File("D:\\test.txt");
-    IParserRule rule = new ParserRuleSingleLine(0){
+    IWrapperRule rule = new WrapperRuleSingleLine(0){
       public Map<String,String> getBodyItemNames(){
         Map<String,String> names = new HashMap<String,String>();
         names.put("0,20","姓名");

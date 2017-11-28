@@ -13,29 +13,26 @@ import nc.liat6.data.wrapper.rule.IWrapperRule;
 import nc.liat6.data.wrapper.rule.WrapperRuleFixedBlockHeight;
 
 /**
- * 带表头的导出示例
+ * 带格式和样式的导出示例
  * @author 6tail
  *
  */
-public class WithHeadWrapperSample{
+public class StyledWrapperSample{
   public static void main(String[] args) throws IOException{
-    File file = new File("D:\\带表头的.xlsx");
+    File file = new File("D:\\带样式的.xls");
     //自定义解析规则
     IWrapperRule rule = new WrapperRuleFixedBlockHeight(){
       public Map<String,String> getHeadItemNames(){
         Map<String,String> names = new HashMap<String,String>();
-        names.put("0,0","表名");
-        names.put("1,0","填报人");
-        names.put("1,1","填报人内容");
-        names.put("3,0","序号");
-        names.put("3,1","姓名");
-        names.put("3,2","性别");
-        names.put("3,3","年龄");
-        names.put("3,4","民族");
+        names.put("0,0","序号");
+        names.put("0,1","姓名");
+        names.put("0,2","性别");
+        names.put("0,3","年龄");
+        names.put("0,4","民族");
         return names;
       }
       public int getBodyStartRow(){
-        return 4;
+        return 1;
       }
       public Map<String,String> getBodyItemNames(){
         Map<String,String> names = new HashMap<String,String>();
@@ -52,15 +49,29 @@ public class WithHeadWrapperSample{
         types.put("0,3",ItemType.number);
         return types;
       }
+
+      public int getDefaultBorder(){
+        return BORDER_ALL;
+      }
+
+      public int getDefaultColumnWidth(){
+        return 20;
+      }
+
+      public int getDefaultHeadRowHeight(){
+        return 25;
+      }
+
+      public int getDefaultBodyRowHeight(){
+        return 21;
+      }
     };
 
-    IWrapper wrapper = WrapperFactory.getInstance().getWrapper("xlsx",file,rule);
+    IWrapper wrapper = WrapperFactory.getInstance().getWrapper("xls",file,rule);
     Block head = new Block(BlockType.head);
     for(String name:rule.getHeadItemNames().values()){
       head.addItemContent(name,name);
     }
-    head.addItemContent("表名","聚会名单");
-    head.addItemContent("填报人内容","麻子");
     wrapper.writeBlock(head);
 
     Block row = new Block(BlockType.body);

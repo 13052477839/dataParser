@@ -6,7 +6,7 @@ package nc.liat6.data.parser.rule;
  * @author 6tail
  *
  */
-public enum RuleType{
+public enum ParserRuleType{
   /** 固定的块高度 */
   fiexd_block_height,
   /** 根据标识自动检测块结束行 */

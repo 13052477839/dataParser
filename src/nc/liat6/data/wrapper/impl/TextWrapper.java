@@ -77,7 +77,7 @@ public class TextWrapper extends AbstractWrapper{
       rows.add(0,new ArrayList<Item>());
     }
     for(List<Item> row:rows){
-      writer.writeLine(row);
+      writer.writeLine(row,block.getType(),headLineIndex);
     }
     headSkiped = true;
   }
@@ -128,7 +128,7 @@ public class TextWrapper extends AbstractWrapper{
       headSkiped = true;
     }
     for(List<Item> row:rows){
-      writer.writeLine(row);
+      writer.writeLine(row,block.getType(),bodyLineIndex);
     }
   }
 }
