@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import nc.liat6.data.reader.AbstractReader;
 import nc.liat6.data.reader.bean.Source;
+import nc.liat6.data.util.DoubleFix;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -86,13 +87,7 @@ public class XlsReader extends AbstractReader{
                 throw new IllegalArgumentException();
               }
             }catch(Exception e){
-              v = String.valueOf(value);
-              if(v.endsWith(".0")){
-                try{
-                  Double.parseDouble(v);
-                  v = v.substring(0,v.lastIndexOf("."));
-                }catch(Exception ex){}
-              }
+              v = DoubleFix.fix(value);
             }
             break;
           case HSSFCell.CELL_TYPE_STRING:
@@ -103,15 +98,9 @@ public class XlsReader extends AbstractReader{
             break;
           case HSSFCell.CELL_TYPE_FORMULA:
             try{
-              v = String.valueOf(cell.getNumericCellValue());
+              v = DoubleFix.fix(cell.getNumericCellValue());
             }catch(IllegalStateException e){
               v = String.valueOf(cell.getRichStringCellValue());
-            }
-            if(v.endsWith(".0")){
-              try{
-                Double.parseDouble(v);
-                v = v.substring(0,v.lastIndexOf("."));
-              }catch(Exception e){}
             }
             break;
           case HSSFCell.CELL_TYPE_BLANK:
